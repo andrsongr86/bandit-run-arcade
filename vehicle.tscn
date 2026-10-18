@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cymot8esdxx8o"]
+
+[ext_resource type="Script" uid="uid://dfve7b3ydkoev" path="res://vehicle.gd" id="1_fouyv"]
+[ext_resource type="Texture2D" uid="uid://be0vxuu3owotu" path="res://carsprites/Compact/compact_green.png" id="2_yx515"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bpxs7"]
+size = Vector2(26, 58)
+
+[node name="Vehicle" type="Area2D" unique_id=1159349662]
+collision_layer = 2
+script = ExtResource("1_fouyv")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=117245346]
+texture = ExtResource("2_yx515")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1935137118]
+shape = SubResource("RectangleShape2D_bpxs7")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

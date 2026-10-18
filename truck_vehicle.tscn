@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://dx11c473vdepv"]
+
+[ext_resource type="Script" uid="uid://b3m2h1d43fqu5" path="res://truck.gd" id="1_kalbs"]
+[ext_resource type="Texture2D" uid="uid://bbr6w7w5jn4ow" path="res://carsprites/Truck/truck_red.png" id="2_je8qp"]
+[ext_resource type="Texture2D" uid="uid://b34biif65kqpv" path="res://carsprites/Truck/truck_blue.png" id="3_f1akm"]
+[ext_resource type="Texture2D" uid="uid://cbynx1jdd3pq3" path="res://carsprites/Truck/truck_cream.png" id="4_huwaa"]
+[ext_resource type="Texture2D" uid="uid://dy04abtaib2sv" path="res://carsprites/Truck/truck_green.png" id="5_i4lp8"]
+[ext_resource type="Texture2D" uid="uid://bok64hk1l516r" path="res://carsprites/Truck/trailer.png" id="6_f1akm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bpxs7"]
+size = Vector2(40, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a2qi0"]
+size = Vector2(36, 162)
+
+[node name="TruckVehicle" type="Area2D" unique_id=733923268]
+script = ExtResource("1_kalbs")
+base_speed = 220.0
+vehicle_length = 200.0
+skin_textures = Array[Texture2D]([ExtResource("2_je8qp"), ExtResource("3_f1akm"), ExtResource("4_huwaa"), ExtResource("5_i4lp8")])
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=215079766]
+texture = ExtResource("5_i4lp8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=168453476]
+shape = SubResource("RectangleShape2D_bpxs7")
+
+[node name="TrailerNode" type="Node2D" parent="." unique_id=1897662441]
+position = Vector2(0, 80)
+
+[node name="Sprite2D" type="Sprite2D" parent="TrailerNode" unique_id=1939718648]
+texture = ExtResource("6_f1akm")
+
+[node name="TrailerCollision" type="CollisionShape2D" parent="." unique_id=1883281982]
+position = Vector2(0, 80)
+shape = SubResource("RectangleShape2D_a2qi0")

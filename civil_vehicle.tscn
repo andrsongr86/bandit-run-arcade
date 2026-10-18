@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://hwcn5fh1onsf"]
+
+[ext_resource type="PackedScene" uid="uid://cymot8esdxx8o" path="res://vehicle.tscn" id="1_trxn0"]
+[ext_resource type="Script" uid="uid://bso2ufi8wc8s6" path="res://civil_vehicle.gd" id="2_xrm0f"]
+[ext_resource type="Texture2D" uid="uid://be0vxuu3owotu" path="res://carsprites/Compact/compact_green.png" id="3_gqr0u"]
+[ext_resource type="Texture2D" uid="uid://cw314mncn4hyp" path="res://carsprites/Compact/compact_red.png" id="3_xrm0f"]
+[ext_resource type="Texture2D" uid="uid://cixmkro64v2ec" path="res://carsprites/Compact/compact_blue.png" id="5_3nbri"]
+[ext_resource type="Texture2D" uid="uid://btabrmh0553ps" path="res://carsprites/Compact/compact_orange.png" id="6_hkyjo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_otnxo"]
+size = Vector2(26, 58)
+
+[node name="CivilVehicle" unique_id=1159349662 instance=ExtResource("1_trxn0")]
+script = ExtResource("2_xrm0f")
+vehicle_sprites = Array[Texture2D]([ExtResource("3_gqr0u"), ExtResource("3_xrm0f"), ExtResource("5_3nbri"), ExtResource("6_hkyjo")])
+
+[node name="Sprite2D" parent="." index="0" unique_id=117245346]
+texture = ExtResource("3_xrm0f")
+
+[node name="CollisionShape2D" parent="." index="1" unique_id=1935137118]
+shape = SubResource("RectangleShape2D_otnxo")

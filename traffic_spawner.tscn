@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://d3kxjrvvrobq2"]
+
+[ext_resource type="Script" uid="uid://ckiiuws1uiv1q" path="res://traffic_spawner.gd" id="1_613i6"]
+[ext_resource type="PackedScene" uid="uid://hwcn5fh1onsf" path="res://civil_vehicle.tscn" id="2_jugdp"]
+[ext_resource type="PackedScene" uid="uid://dys4fqm1cbs2d" path="res://coupe.tscn" id="3_mhtj1"]
+[ext_resource type="PackedScene" uid="uid://dsws6qovlsu16" path="res://sedan.tscn" id="4_pf5r6"]
+[ext_resource type="PackedScene" uid="uid://dx11c473vdepv" path="res://truck_vehicle.tscn" id="5_cq3as"]
+
+[node name="TrafficSpawner" type="Node2D" unique_id=402729209]
+script = ExtResource("1_613i6")
+vehicle_scenes = Array[PackedScene]([ExtResource("2_jugdp"), ExtResource("3_mhtj1"), ExtResource("4_pf5r6"), ExtResource("5_cq3as")])
+
+[node name="SpawnTimer" type="Timer" parent="." unique_id=89520244]
+wait_time = 1.2
+autostart = true
+
+[node name="VehiclesContainer" type="Node2D" parent="." unique_id=222325762]

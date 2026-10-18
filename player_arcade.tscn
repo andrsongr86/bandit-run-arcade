@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://7himcebqtf3l"]
+
+[ext_resource type="Script" uid="uid://hhhkrviat1ud" path="res://player_arcade.gd" id="1_1km3a"]
+[ext_resource type="Texture2D" uid="uid://bxsgddb1m0uaf" path="res://carsprites/Sport/sport_green.png" id="2_ehsnw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bpxs7"]
+size = Vector2(30, 70)
+
+[node name="PlayerArcade" type="CharacterBody2D" unique_id=1798554013]
+collision_mask = 0
+script = ExtResource("1_1km3a")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2128648764]
+texture = ExtResource("2_ehsnw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=895977565]
+shape = SubResource("RectangleShape2D_bpxs7")

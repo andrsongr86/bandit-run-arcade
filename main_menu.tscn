@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://q8y0kf7qvej4"]
+
+[ext_resource type="Script" uid="uid://bn4vubqvf81ag" path="res://main_menu.gd" id="1_06t4h"]
+
+[node name="MainMenu" type="Control" unique_id=1248519580]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+script = ExtResource("1_06t4h")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1263581773]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="MainTitleLabel" type="Label" parent="VBoxContainer" unique_id=369754547]
+layout_mode = 2
+text = "BANDIT RUN
+ARCADE"
+horizontal_alignment = 1
+
+[node name="PlayButton" type="Button" parent="VBoxContainer" unique_id=475622582]
+layout_mode = 2
+action_mode = 0
+text = "JUGAR"
+
+[node name="HighScoresButton" type="Button" parent="VBoxContainer" unique_id=194273572]
+layout_mode = 2
+action_mode = 0
+text = "HIGH SCORES"
+
+[node name="ControlsButton" type="Button" parent="VBoxContainer" unique_id=1893695258]
+layout_mode = 2
+action_mode = 0
+text = "CONTROLES"
+
+[node name="CreditsButton" type="Button" parent="VBoxContainer" unique_id=1332108285]
+layout_mode = 2
+action_mode = 0
+text = "CREDITOS"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer" unique_id=1734807832]
+layout_mode = 2
+action_mode = 0
+text = "SALIR"

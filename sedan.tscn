@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dsws6qovlsu16"]
+
+[ext_resource type="PackedScene" uid="uid://cymot8esdxx8o" path="res://vehicle.tscn" id="1_atygt"]
+[ext_resource type="Texture2D" uid="uid://c5temoejasahl" path="res://carsprites/Sedan/sedan_red.png" id="2_1dgtc"]
+[ext_resource type="Texture2D" uid="uid://ctkri8ixofx8d" path="res://carsprites/Sedan/sedan_blue.png" id="3_y23tk"]
+[ext_resource type="Texture2D" uid="uid://gr2seorbpuy0" path="res://carsprites/Sedan/sedan_gray.png" id="4_u03xv"]
+[ext_resource type="Texture2D" uid="uid://dr2nkjuhm18hh" path="res://carsprites/Sedan/sedan_green.png" id="5_02p0r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p7kqi"]
+size = Vector2(30, 78)
+
+[node name="Sedan" unique_id=1159349662 instance=ExtResource("1_atygt")]
+skin_textures = Array[Texture2D]([ExtResource("2_1dgtc"), ExtResource("3_y23tk"), ExtResource("4_u03xv"), ExtResource("5_02p0r")])
+
+[node name="Sprite2D" parent="." index="0" unique_id=117245346]
+texture = ExtResource("3_y23tk")
+
+[node name="CollisionShape2D" parent="." index="1" unique_id=1935137118]
+shape = SubResource("RectangleShape2D_p7kqi")
