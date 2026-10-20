@@ -1,5 +1,9 @@
 extends Node
 
+var is_multiplayer: bool = false
+var p1_car_texture_path: String = "res://carsprites/Sport/sport_red.png"
+var p2_car_texture_path: String = "res://carsprites/Sport/sport_blue.png"
+var current_selecting_player: int = 1
 var winner_text: String = ""
 var final_score: int = 0 # <-- Añadida para recordar el puntaje en la pantalla de Game Over
 
@@ -14,6 +18,7 @@ func _ready() -> void:
 			high_scores.append({"name": "CPU", "score": (10 - i) * 1000})
 
 func reset_game() -> void:
+	current_selecting_player = 1
 	winner_text = ""
 	final_score = 0
 

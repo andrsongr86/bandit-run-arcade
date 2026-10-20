@@ -9,6 +9,7 @@ var mgr_p1: LocalGameManager = null
 var mgr_p2: LocalGameManager = null
 
 func _ready() -> void:
+	GameManager.is_multiplayer = true
 	var game_scene = preload("res://scenes/arcade_game.tscn")
 	
 	# --- INSTANCIAR JUGADOR 1 ---

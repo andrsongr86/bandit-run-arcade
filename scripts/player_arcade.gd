@@ -27,13 +27,18 @@ extends CharacterBody2D
 var starting_y: float = 0.0
 
 func _ready() -> void:
-	# Guarda el punto Y donde coloques al jugador en el editor
+	if sprite and GameManager:
+		var texture_path = GameManager.p1_car_texture_path
+		if player_id == 2:
+			texture_path = GameManager.p2_car_texture_path
+			
+		if ResourceLoader.exists(texture_path):
+			sprite.texture = load(texture_path)
+			
 	starting_y = position.y
-	
-	# Si estamos en modo 1v1 (dentro de un SubViewport), lo centramos en los nuevos carriles
 	if get_viewport() is SubViewport:
-		position.x = 352.0 # Centro exacto de los 5 carriles en 1v1acto de los 5 carriles en 1v1
-
+		position.x = 352.0 
+		
 func _physics_process(delta: float) -> void:
 	_handle_movement(delta)
 	_handle_visual_rotation(delta)

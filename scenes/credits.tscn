@@ -44,7 +44,7 @@ Anderson Ramos
 ARTE
 marcusvh - 2D Top Down Pixel Art Car Pack
 Acxa Rmz - Simple 32x32 City Tileset
-"
+Stefanie Koerner (pheist) - Fipps Font"
 horizontal_alignment = 1
 
 [node name="BackButton" type="Button" parent="ColorRect/VBoxContainer" unique_id=1209152620]
