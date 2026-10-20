@@ -49,4 +49,4 @@ offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="PauseMenu" parent="." unique_id=1084248701 instance=ExtResource("2_c5m37")]
-layout_mode = 1
+visible = false

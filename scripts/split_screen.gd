@@ -26,12 +26,14 @@ func _ready() -> void:
 
 	# --- INSTANCIAR JUGADOR 2 ---
 	var world_p2 = game_scene.instantiate()
-	p2_viewport.add_child(world_p2)
 	
+	# Buscamos y configuramos el ID ANTES de hacer el add_child
 	var player_p2 = world_p2.get_node_or_null("PlayerArcade")
 	if player_p2:
 		player_p2.player_id = 2
 		
+	p2_viewport.add_child(world_p2) # <--- Ahora sí lo añadimos al árbol
+	
 	mgr_p2 = world_p2.get_node_or_null("LocalGameManager") as LocalGameManager
 	if mgr_p2:
 		mgr_p2.game_over_triggered.connect(_on_p2_lost)
