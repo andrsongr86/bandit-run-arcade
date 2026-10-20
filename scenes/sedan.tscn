@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dsws6qovlsu16"]
 
-[ext_resource type="PackedScene" uid="uid://cymot8esdxx8o" path="res://vehicle.tscn" id="1_atygt"]
+[ext_resource type="PackedScene" uid="uid://cymot8esdxx8o" path="res://scenes/vehicle.tscn" id="1_atygt"]
 [ext_resource type="Texture2D" uid="uid://c5temoejasahl" path="res://carsprites/Sedan/sedan_red.png" id="2_1dgtc"]
 [ext_resource type="Texture2D" uid="uid://ctkri8ixofx8d" path="res://carsprites/Sedan/sedan_blue.png" id="3_y23tk"]
 [ext_resource type="Texture2D" uid="uid://gr2seorbpuy0" path="res://carsprites/Sedan/sedan_gray.png" id="4_u03xv"]

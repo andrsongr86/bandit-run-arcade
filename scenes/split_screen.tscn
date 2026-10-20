@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://dx5wkt201d3db"]
+
+[ext_resource type="Script" uid="uid://qpxnisicwwnp" path="res://scripts/split_screen.gd" id="1_ahfsy"]
+
+[node name="SplitScreenManager" type="Control" unique_id=1920692611]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ahfsy")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=296947060]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="SubViewportContainerP1" type="SubViewportContainer" parent="HBoxContainer" unique_id=2014608870]
+layout_mode = 2
+size_flags_horizontal = 3
+stretch = true
+
+[node name="SubViewportP1" type="SubViewport" parent="HBoxContainer/SubViewportContainerP1" unique_id=267787918]
+handle_input_locally = false
+size = Vector2i(574, 648)
+size_2d_override = Vector2i(640, 720)
+render_target_update_mode = 4
+
+[node name="SubViewportContainerP2" type="SubViewportContainer" parent="HBoxContainer" unique_id=1572513943]
+layout_mode = 2
+size_flags_horizontal = 3
+stretch = true
+
+[node name="SubViewportP2" type="SubViewport" parent="HBoxContainer/SubViewportContainerP2" unique_id=2105314913]
+handle_input_locally = false
+size = Vector2i(574, 648)
+size_2d_override = Vector2i(640, 720)
+render_target_update_mode = 4
+
+[node name="WinnerLabel" type="Label" parent="." unique_id=1707294282]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0

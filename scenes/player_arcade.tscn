@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://7himcebqtf3l"]
 
-[ext_resource type="Script" uid="uid://hhhkrviat1ud" path="res://player_arcade.gd" id="1_1km3a"]
+[ext_resource type="Script" uid="uid://hhhkrviat1ud" path="res://scripts/player_arcade.gd" id="1_1km3a"]
 [ext_resource type="Texture2D" uid="uid://bxsgddb1m0uaf" path="res://carsprites/Sport/sport_green.png" id="2_ehsnw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bpxs7"]

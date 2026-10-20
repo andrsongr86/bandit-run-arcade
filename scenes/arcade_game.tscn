@@ -1,22 +1,25 @@
 [gd_scene format=3 uid="uid://b3ipvodbjy8mb"]
 
-[ext_resource type="PackedScene" uid="uid://cacshn6cg3l8r" path="res://hud.tscn" id="1_pmw4w"]
+[ext_resource type="PackedScene" uid="uid://cacshn6cg3l8r" path="res://scenes/hud.tscn" id="1_pmw4w"]
 [ext_resource type="TileSet" uid="uid://ce40qn12p1727" path="res://new_tile_set.tres" id="2_2wbxb"]
-[ext_resource type="PackedScene" uid="uid://d3kxjrvvrobq2" path="res://traffic_spawner.tscn" id="4_m2g5d"]
-[ext_resource type="Script" uid="uid://chhimpjnk4psb" path="res://parallax_2d.gd" id="4_pmw4w"]
-[ext_resource type="PackedScene" uid="uid://7himcebqtf3l" path="res://player_arcade.tscn" id="5_pmw4w"]
+[ext_resource type="Script" uid="uid://b5hox65nue3jr" path="res://scripts/camera_2d.gd" id="3_t301s"]
+[ext_resource type="PackedScene" uid="uid://d3kxjrvvrobq2" path="res://scenes/traffic_spawner.tscn" id="4_m2g5d"]
+[ext_resource type="Script" uid="uid://chhimpjnk4psb" path="res://scripts/parallax_2d.gd" id="4_pmw4w"]
+[ext_resource type="PackedScene" uid="uid://7himcebqtf3l" path="res://scenes/player_arcade.tscn" id="5_pmw4w"]
+[ext_resource type="Script" uid="uid://byijoqbrom87w" path="res://scripts/local_game_manager.gd" id="6_nyrby"]
 
 [node name="ArcadeGame" type="Node2D" unique_id=603388281]
 
 [node name="HUD" parent="." unique_id=1260848484 instance=ExtResource("1_pmw4w")]
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1108877563]
-position = Vector2(512, 408)
-zoom = Vector2(1.4, 1.4)
-
 [node name="PlayerArcade" parent="." unique_id=1798554013 instance=ExtResource("5_pmw4w")]
 z_index = 1
 position = Vector2(512, 408)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1108877563]
+position = Vector2(512, 408)
+zoom = Vector2(1.4, 1.4)
+script = ExtResource("3_t301s")
 
 [node name="TrafficSpawner" parent="." unique_id=402729209 instance=ExtResource("4_m2g5d")]
 z_index = 1
@@ -32,3 +35,6 @@ tile_set = ExtResource("2_2wbxb")
 
 [node name="DecoLayer" type="TileMapLayer" parent="Parallax2D" unique_id=202603756]
 tile_set = ExtResource("2_2wbxb")
+
+[node name="LocalGameManager" type="Node" parent="." unique_id=270551143]
+script = ExtResource("6_nyrby")

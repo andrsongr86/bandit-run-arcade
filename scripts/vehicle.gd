@@ -20,7 +20,9 @@ var target_speed: float = 0.0
 var acceleration_rate: float = 120.0 # Qué tan rápido frena o acelera
 
 var target_x: float = 0.0
+# Añade esta variable junto a tus otras variables de carril (alrededor de la línea 17-22):
 var current_lane_index: int = 0
+var target_lane_index: int = 0 # <-- ¡Añadida para corregir el error del TrafficSpawner!
 var is_changing_lane: bool = false
 var lane_change_speed: float = 50.0 
 var relative_speed: float = 0.0
@@ -70,6 +72,7 @@ func update_movement(delta: float, game_speed: float) -> void:
 func change_to_lane(new_lane_index: int, new_target_x: float) -> void:
 	if not is_changing_lane:
 		current_lane_index = new_lane_index
+		target_lane_index = new_lane_index # Sincronizamos ambas
 		target_x = new_target_x
 		is_changing_lane = true
 
@@ -84,7 +87,13 @@ func _destroy() -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is PlayerArcade:
-		GameManager.take_damage(collision_damage)
+		# Llamamos al método take_damage del jugador específico que recibió el impacto
+		if body.has_method("take_damage"):
+			body.take_damage(collision_damage)
+		else:
+			# Respaldo por si acaso en modo solitario
+			GameManager.take_damage(collision_damage)
+			
 		_on_impact_with_player(body)
 
 func _on_impact_with_player(_player: Node2D) -> void:

@@ -12,7 +12,12 @@ var current_slot: int = 0
 var is_entering_name: bool = true
 
 func _ready() -> void:
-	final_score_label.text = "Puntuación Final: %d" % GameManager.score
+	# Leemos la puntuación final almacenada globalmente
+	final_score_label.text = "Puntuación Final: %d" % GameManager.final_score
+	
+	# Si venimos de 1v1 y hay un ganador anunciado, lo concatenamos visualmente
+	if GameManager.winner_text != "":
+		final_score_label.text = GameManager.winner_text + "\n" + final_score_label.text
 	
 	# Siempre activamos la ruleta de iniciales al terminar
 	is_entering_name = true
@@ -69,15 +74,15 @@ func _save_new_high_score() -> void:
 	is_entering_name = false
 	var player_name = alphabet[initials_idx[0]] + alphabet[initials_idx[1]] + alphabet[initials_idx[2]]
 	
-	# Guardamos el puntaje (GameManager lo ordenará y mantendrá solo el Top 10)
-	GameManager.add_high_score(player_name, GameManager.score)
+	# Guardamos el puntaje pasando GameManager.final_score
+	GameManager.add_high_score(player_name, GameManager.final_score)
 	
 	# Redirigimos a la tabla de puntuaciones
-	get_tree().change_scene_to_file("res://high_scores.tscn")
+	get_tree().change_scene_to_file("res://scenes/high_scores.tscn")
 
 func _on_restart_pressed() -> void:
 	GameManager.reset_game()
-	get_tree().change_scene_to_file("res://arcade_game.tscn")
+	get_tree().change_scene_to_file("res://scenes/arcade_game.tscn")
 
 func _on_main_menu_pressed() -> void:
-	get_tree().change_scene_to_file("res://main_menu.tscn")
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")

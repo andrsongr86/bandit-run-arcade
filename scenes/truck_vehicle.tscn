@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dx11c473vdepv"]
 
-[ext_resource type="Script" uid="uid://b3m2h1d43fqu5" path="res://truck.gd" id="1_kalbs"]
+[ext_resource type="Script" uid="uid://b3m2h1d43fqu5" path="res://scripts/truck.gd" id="1_kalbs"]
 [ext_resource type="Texture2D" uid="uid://bbr6w7w5jn4ow" path="res://carsprites/Truck/truck_red.png" id="2_je8qp"]
 [ext_resource type="Texture2D" uid="uid://b34biif65kqpv" path="res://carsprites/Truck/truck_blue.png" id="3_f1akm"]
 [ext_resource type="Texture2D" uid="uid://cbynx1jdd3pq3" path="res://carsprites/Truck/truck_cream.png" id="4_huwaa"]

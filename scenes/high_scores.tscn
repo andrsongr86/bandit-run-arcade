@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ciw40xtmp3dvb"]
 
-[ext_resource type="Script" uid="uid://whbg04766rdn" path="res://high_scores.gd" id="1_88626"]
+[ext_resource type="Script" uid="uid://whbg04766rdn" path="res://scripts/high_scores.gd" id="1_88626"]
 
 [node name="HighScores" type="Control" unique_id=1794480144]
 layout_mode = 3

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://q8y0kf7qvej4"]
 
-[ext_resource type="Script" uid="uid://bn4vubqvf81ag" path="res://main_menu.gd" id="1_06t4h"]
+[ext_resource type="Script" uid="uid://bn4vubqvf81ag" path="res://scripts/main_menu.gd" id="1_06t4h"]
 
 [node name="MainMenu" type="Control" unique_id=1248519580]
 layout_mode = 3
@@ -37,7 +37,12 @@ horizontal_alignment = 1
 [node name="PlayButton" type="Button" parent="VBoxContainer" unique_id=475622582]
 layout_mode = 2
 action_mode = 0
-text = "JUGAR"
+text = "UN JUGADOR"
+
+[node name="SplitScreenButton" type="Button" parent="VBoxContainer" unique_id=1875406071]
+layout_mode = 2
+action_mode = 0
+text = "1 VS 1"
 
 [node name="HighScoresButton" type="Button" parent="VBoxContainer" unique_id=194273572]
 layout_mode = 2
