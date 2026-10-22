@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://b3ipvodbjy8mb"]
+
+[ext_resource type="PackedScene" uid="uid://cacshn6cg3l8r" path="res://scenes/hud.tscn" id="1_pmw4w"]
+[ext_resource type="TileSet" uid="uid://ce40qn12p1727" path="res://new_tile_set.tres" id="2_2wbxb"]
+[ext_resource type="Script" uid="uid://b5hox65nue3jr" path="res://scripts/camera_2d.gd" id="3_t301s"]
+[ext_resource type="PackedScene" uid="uid://d3kxjrvvrobq2" path="res://scenes/traffic_spawner.tscn" id="4_m2g5d"]
+[ext_resource type="Script" uid="uid://chhimpjnk4psb" path="res://scripts/parallax_2d.gd" id="4_pmw4w"]
+[ext_resource type="PackedScene" uid="uid://7himcebqtf3l" path="res://scenes/player_arcade.tscn" id="5_pmw4w"]
+[ext_resource type="Script" uid="uid://byijoqbrom87w" path="res://scripts/local_game_manager.gd" id="6_nyrby"]
+[ext_resource type="PackedScene" uid="uid://d1m7q5magq8s8" path="res://scenes/pause_menu.tscn" id="8_5hx2x"]
+[ext_resource type="Shader" uid="uid://blxec0qx26x20" path="res://shaders/arcade_game.gdshader" id="9_tai42"]
+
+[sub_resource type="GDScript" id="GDScript_a2qi0"]
+script/source = "shader_type canvas_item;
+
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+uniform float scanline_count : hint_range(0.0, 1000.0) = 400.0;
+uniform float vignette_intensity : hint_range(0.0, 1.0) = 0.45;
+
+void fragment() {
+	vec2 uv = UV;
+	vec4 color = texture(SCREEN_TEXTURE, uv);
+	
+	// Efecto de líneas de escaneo (Scanlines)
+	float scanline = sin(uv.y * scanline_count * 3.14159 * 2.0);
+	color.rgb -= scanline * 0.035;
+	
+	// Viñeta oscura en las esquinas
+	vec2 center = uv - 0.5;
+	float vignette = dot(center, center);
+	color.rgb -= vignette * vignette_intensity;
+	
+	COLOR = color;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bpxs7"]
+shader = ExtResource("9_tai42")
+shader_parameter/scanline_count = 400.0
+shader_parameter/vignette_intensity = 0.45
+script = SubResource("GDScript_a2qi0")
+
+[node name="ArcadeGame" type="Node2D" unique_id=603388281]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1108877563]
+position = Vector2(512, 408)
+zoom = Vector2(1.4, 1.4)
+script = ExtResource("3_t301s")
+
+[node name="HUD" parent="." unique_id=1260848484 instance=ExtResource("1_pmw4w")]
+
+[node name="PlayerArcade" parent="." unique_id=1798554013 instance=ExtResource("5_pmw4w")]
+z_index = 1
+position = Vector2(512, 408)
+
+[node name="TrafficSpawner" parent="." unique_id=402729209 instance=ExtResource("4_m2g5d")]
+z_index = 1
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=661175760]
+repeat_size = Vector2(0, 1280)
+autoscroll = Vector2(0, 200)
+ignore_camera_scroll = true
+script = ExtResource("4_pmw4w")
+
+[node name="GroundLayer" type="TileMapLayer" parent="Parallax2D" unique_id=826008689]
+tile_set = ExtResource("2_2wbxb")
+
+[node name="DecoLayer" type="TileMapLayer" parent="Parallax2D" unique_id=202603756]
+tile_set = ExtResource("2_2wbxb")
+
+[node name="LocalGameManager" type="Node" parent="." unique_id=270551143]
+script = ExtResource("6_nyrby")
+
+[node name="PauseMenu" parent="." unique_id=1084248701 instance=ExtResource("8_5hx2x")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=263760704]
+layer = 100
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=416591252]
+material = SubResource("ShaderMaterial_bpxs7")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

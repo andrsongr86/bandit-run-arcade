@@ -11,6 +11,7 @@
 size = Vector2(26, 58)
 
 [node name="CivilVehicle" unique_id=1159349662 instance=ExtResource("1_trxn0")]
+collision_layer = 3
 script = ExtResource("2_xrm0f")
 vehicle_sprites = Array[Texture2D]([ExtResource("3_gqr0u"), ExtResource("3_xrm0f"), ExtResource("5_3nbri"), ExtResource("6_hkyjo")])
 

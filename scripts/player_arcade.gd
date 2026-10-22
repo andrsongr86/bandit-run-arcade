@@ -10,21 +10,32 @@ extends CharacterBody2D
 @export var vertical_maneuver_speed: float = 150.0 
 
 @export_group("Boundaries")
-# Límites para un jugador (Pantalla Completa)
 @export var min_x: float = 272.0 
 @export var max_x: float = 752.0
 
-# Límites estrictos para los 5 carriles en Modo 1v1 (Pantalla Dividida)
 @export var split_min_x: float = 210.0
-@export var split_max_x: float = 494.0 # Ajusta estos valores según la posición exacta de tus 5 carriles en el sub-viewport
+@export var split_max_x: float = 494.0
 
 @export var min_y_offset: float = -200.0 
 @export var max_y_offset: float = 200.0 
 
+@export_group("Combo System")
+@export var base_near_miss_points: int = 100
+@export var combo_max_time: float = 3.0 # Temporizador de 3 segundos
+
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var base_rotation: float = sprite.rotation 
+@onready var near_miss_area: Area2D = $NearMissArea
 
 var starting_y: float = 0.0
+
+# Variables de Estado del Combo
+var combo_active: bool = false
+var combo_points: int = 0
+var combo_multiplier: int = 2
+var combo_timer: float = 0.0
+var counted_vehicles: Array[int] = []
+var cars_in_combo: int = 0 
 
 func _ready() -> void:
 	if sprite and GameManager:
@@ -39,11 +50,16 @@ func _ready() -> void:
 	if get_viewport() is SubViewport:
 		position.x = 352.0 
 		
-func _physics_process(delta: float) -> void:
+	if near_miss_area:
+		if not near_miss_area.area_entered.is_connected(_on_near_miss_detected):
+			near_miss_area.area_entered.connect(_on_near_miss_detected)
+
+func _process(delta: float) -> void:
 	_handle_movement(delta)
 	_handle_visual_rotation(delta)
 	move_and_slide()
 	_clamp_positions()
+	_handle_combo_timer(delta)
 
 func _handle_movement(delta: float) -> void:
 	var action_left = "move_left"
@@ -81,13 +97,85 @@ func _handle_visual_rotation(delta: float) -> void:
 
 func _clamp_positions() -> void:
 	if get_viewport() is SubViewport:
-		# Modo 1v1: Restringe el movimiento únicamente a los 5 carriles centrales
 		position.x = clamp(position.x, split_min_x, split_max_x)
 	else:
-		# Modo Un Jugador: Usa los límites de pantalla completa normales
 		position.x = clamp(position.x, min_x, max_x)
 		
 	position.y = clamp(position.y, starting_y + min_y_offset, starting_y + max_y_offset)
+
+# --- SISTEMA DE COMBOS Y PROXIMIDAD (NEAR-MISS) ---
+
+func _on_near_miss_detected(area: Area2D) -> void:
+	if area == self or area == near_miss_area:
+		return
+		
+	if area.is_in_group("Traffic") or area is Vehicle or area.name.contains("Traffic") or area.name.contains("Car"):
+		var car_id = area.get_instance_id()
+		
+		if counted_vehicles.has(car_id):
+			return
+			
+		counted_vehicles.append(car_id)
+		cars_in_combo += 1
+		
+		var old_multiplier = combo_multiplier
+		
+		if not combo_active:
+			combo_active = true
+			cars_in_combo = 1
+			combo_multiplier = 2
+			combo_points = base_near_miss_points
+		else:
+			combo_points += base_near_miss_points
+			combo_multiplier = min(2 + int(float(cars_in_combo - 1) / 5.0), 8)
+			
+		# Si el multiplicador sube de nivel, damos un pequeño impulso visual a la cámara
+		if combo_multiplier > old_multiplier:
+			_trigger_camera_shake(4.0 * combo_multiplier)
+			
+		combo_timer = combo_max_time
+
+func _handle_combo_timer(delta: float) -> void:
+	if combo_active:
+		combo_timer -= delta
+		if combo_timer <= 0:
+			_end_combo()
+
+func _end_combo() -> void:
+	combo_active = false
+	var final_score = combo_points * combo_multiplier
+	_add_score(final_score)
+	
+	# Si se completó un combo alto (X5 o más), la cámara celebra con un pequeño temblor
+	if combo_multiplier >= 5:
+		_trigger_camera_shake(4.0)
+	
+	combo_points = 0
+	combo_multiplier = 2
+	cars_in_combo = 0
+	counted_vehicles.clear()
+
+func _trigger_camera_shake(strength: float) -> void:
+	var cam = get_viewport().get_camera_2d()
+	if cam and cam.has_method("apply_shake"):
+		cam.apply_shake(strength)
+
+func _add_score(amount: int) -> void:
+	var local_mgr = null
+	var current_node = get_parent()
+	while current_node:
+		local_mgr = current_node.get_node_or_null("LocalGameManager")
+		if local_mgr: break
+		current_node = current_node.get_parent()
+		
+	if local_mgr and local_mgr.has_method("add_score"):
+		local_mgr.add_score(amount)
+	elif local_mgr and "score" in local_mgr:
+		local_mgr.score += amount
+	elif GameManager and GameManager.has_method("add_score"):
+		GameManager.add_score(amount)
+
+# --- SISTEMA DE DAÑO ---
 
 func take_damage(_amount: int) -> void:
 	var local_mgr = null
@@ -98,6 +186,19 @@ func take_damage(_amount: int) -> void:
 		current_node = current_node.get_parent()
 		
 	if local_mgr:
+		# Si esta vida es la última (actualmente tiene 1 de vida y va a perder), el jugador muere
+		if local_mgr.current_health <= 1:
+			# 1. Creamos la explosión en la posición exacta del jugador
+			GameManager.spawn_explosion(global_position)
+			
+			# 2. Ocultamos el sprite del carro para que parezca que estalló
+			if sprite:
+				sprite.visible = false
+				
+			# 3. Desactivamos el procesamiento de movimiento para que el carro se congele
+			set_process(false)
+			set_physics_process(false)
+			
 		local_mgr.take_damage(1)
 	elif GameManager:
 		GameManager.take_damage(1)

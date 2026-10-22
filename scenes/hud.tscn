@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cacshn6cg3l8r"]
 
 [ext_resource type="Script" uid="uid://c3yjv2l0n2u25" path="res://scripts/hud.gd" id="1_37p78"]
+[ext_resource type="FontFile" uid="uid://1yhglfhb35d0" path="res://fonts/Pixel-Grafiti.ttf" id="2_oo0fn"]
 
 [node name="HUD" type="CanvasLayer" unique_id=1260848484]
 script = ExtResource("1_37p78")
@@ -43,3 +44,22 @@ layout_mode = 2
 size_flags_horizontal = 8
 text = "VIDAS: 0"
 horizontal_alignment = 2
+
+[node name="ComboContainer" type="VBoxContainer" parent="Control" unique_id=278264248]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ComboProgressBar" type="ProgressBar" parent="Control/ComboContainer" unique_id=1476608875]
+layout_mode = 2
+show_percentage = false
+
+[node name="ComboLabel" type="Label" parent="Control/ComboContainer" unique_id=1709666080]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_oo0fn")
+text = "¡X2! (+500 pts)"
+horizontal_alignment = 1

@@ -13,7 +13,7 @@ size = Vector2(40, 80)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a2qi0"]
 size = Vector2(36, 162)
 
-[node name="TruckVehicle" type="Area2D" unique_id=733923268]
+[node name="TruckVehicle" type="Area2D" unique_id=733923268 groups=["Traffic"]]
 script = ExtResource("1_kalbs")
 base_speed = 220.0
 vehicle_length = 200.0

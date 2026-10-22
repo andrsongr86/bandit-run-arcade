@@ -10,6 +10,7 @@
 size = Vector2(30, 78)
 
 [node name="Sedan" unique_id=1159349662 instance=ExtResource("1_atygt")]
+collision_layer = 3
 skin_textures = Array[Texture2D]([ExtResource("2_1dgtc"), ExtResource("3_y23tk"), ExtResource("4_u03xv"), ExtResource("5_02p0r")])
 
 [node name="Sprite2D" parent="." index="0" unique_id=117245346]

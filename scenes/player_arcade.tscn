@@ -4,7 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://bxsgddb1m0uaf" path="res://carsprites/Sport/sport_green.png" id="2_ehsnw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bpxs7"]
-size = Vector2(30, 70)
+size = Vector2(32, 72)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a2qi0"]
+size = Vector2(54, 72)
 
 [node name="PlayerArcade" type="CharacterBody2D" unique_id=1798554013]
 collision_mask = 0
@@ -15,3 +18,8 @@ texture = ExtResource("2_ehsnw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=895977565]
 shape = SubResource("RectangleShape2D_bpxs7")
+
+[node name="NearMissArea" type="Area2D" parent="." unique_id=145302447]
+
+[node name="CollisionMissArea" type="CollisionShape2D" parent="NearMissArea" unique_id=878106613]
+shape = SubResource("RectangleShape2D_a2qi0")

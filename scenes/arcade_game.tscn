@@ -8,6 +8,16 @@
 [ext_resource type="PackedScene" uid="uid://7himcebqtf3l" path="res://scenes/player_arcade.tscn" id="5_pmw4w"]
 [ext_resource type="Script" uid="uid://byijoqbrom87w" path="res://scripts/local_game_manager.gd" id="6_nyrby"]
 [ext_resource type="PackedScene" uid="uid://d1m7q5magq8s8" path="res://scenes/pause_menu.tscn" id="8_5hx2x"]
+[ext_resource type="Shader" uid="uid://blxec0qx26x20" path="res://shaders/arcade_game.gdshader" id="9_tai42"]
+[ext_resource type="AudioStream" uid="uid://b8rxlt5vbpyyw" path="res://ost/GTI Club： Supermini Festa! Soundtrack - Final Lap.mp3" id="10_xk40k"]
+
+[sub_resource type="GDScript" id="GDScript_tai42"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tai42"]
+shader = ExtResource("9_tai42")
+shader_parameter/scanline_count = 400.0
+shader_parameter/vignette_intensity = 0.45
+script = SubResource("GDScript_tai42")
 
 [node name="ArcadeGame" type="Node2D" unique_id=603388281]
 
@@ -41,3 +51,20 @@ tile_set = ExtResource("2_2wbxb")
 script = ExtResource("6_nyrby")
 
 [node name="PauseMenu" parent="." unique_id=1084248701 instance=ExtResource("8_5hx2x")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=263760704]
+layer = 100
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=416591252]
+material = SubResource("ShaderMaterial_tai42")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BGMPlayer" type="AudioStreamPlayer" parent="." unique_id=1460676418]
+stream = ExtResource("10_xk40k")
+autoplay = true
+playback_type = 1

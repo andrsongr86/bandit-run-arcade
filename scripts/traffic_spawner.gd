@@ -138,6 +138,7 @@ func spawn_vehicle() -> void:
 
 	if spawned_node is Vehicle:
 		var new_vehicle: Vehicle = spawned_node
+		new_vehicle.add_to_group("Traffic")
 		new_vehicle.current_lane_index = selected_lane
 		new_vehicle.target_x = active_lanes[selected_lane]
 		new_vehicle.position = Vector2(new_vehicle.target_x, spawn_y_offset)

@@ -1,7 +1,6 @@
 class_name LocalGameManager
 extends Node
 
-# Señales para notificar al HUD cuando los datos cambien
 signal score_changed(new_score: int)
 signal health_changed(new_health: int)
 signal game_over_triggered
@@ -57,21 +56,33 @@ func take_damage(amount: int) -> void:
 	if is_game_over: return
 	
 	current_health -= amount
-	current_health = max(0, current_health) # Evitar salud negativa
+	current_health = max(0, current_health)
 	health_changed.emit(current_health)
+	
+	_trigger_camera_shake(8.0)
 	
 	if current_health <= 0:
 		trigger_game_over()
 
+func _trigger_camera_shake(strength: float) -> void:
+	var cam = get_viewport().get_camera_2d()
+	if cam and cam.has_method("apply_shake"):
+		cam.apply_shake(strength)
+
+# MODIFICADO: Añadimos un pequeño retraso antes de cambiar de escena por Game Over
 func trigger_game_over() -> void:
 	if is_game_over: return
 	is_game_over = true
 	
-	# Guardamos el puntaje local en el global para que la pantalla de Game Over lo lea
 	if GameManager:
 		GameManager.final_score = score
 		
 	game_over_triggered.emit()
+	
+	# Esperamos 1.5 segundos para apreciar la explosión y la sacudida antes del Game Over
+	var timer = get_tree().create_timer(1.5)
+	await timer.timeout
+	
 	call_deferred("_check_and_change_scene")
 
 func _check_and_change_scene() -> void:
@@ -82,6 +93,5 @@ func _check_and_change_scene() -> void:
 			has_external_listener = true
 			break
 			
-	# Si nadie externo (como el 1v1) atrapó el Game Over, cambiamos de escena nosotros mismos (Modo Solitario)
 	if not has_external_listener:
 		get_tree().change_scene_to_file("res://scenes/game_over.tscn")
