@@ -1,6 +1,15 @@
 [gd_scene format=3 uid="uid://ciw40xtmp3dvb"]
 
 [ext_resource type="Script" uid="uid://whbg04766rdn" path="res://scripts/high_scores.gd" id="1_88626"]
+[ext_resource type="Shader" uid="uid://blxec0qx26x20" path="res://shaders/arcade_game.gdshader" id="2_3582i"]
+
+[sub_resource type="GDScript" id="GDScript_1o3qf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e5trt"]
+shader = ExtResource("2_3582i")
+shader_parameter/scanline_count = 400.0
+shader_parameter/vignette_intensity = 0.45
+script = SubResource("GDScript_1o3qf")
 
 [node name="HighScores" type="Control" unique_id=1794480144]
 layout_mode = 3
@@ -36,4 +45,16 @@ grow_vertical = 2
 
 [node name="BackButton" type="Button" parent="ColorRect/VBoxContainer" unique_id=794133167]
 layout_mode = 2
-text = "Salir"
+text = "salir"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=471242003]
+layer = 100
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=291018727]
+material = SubResource("ShaderMaterial_e5trt")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

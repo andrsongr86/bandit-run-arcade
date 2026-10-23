@@ -66,5 +66,6 @@ mouse_filter = 2
 
 [node name="BGMPlayer" type="AudioStreamPlayer" parent="." unique_id=1460676418]
 stream = ExtResource("10_xk40k")
+volume_db = -5.0
 autoplay = true
-playback_type = 1
+parameters/looping = true

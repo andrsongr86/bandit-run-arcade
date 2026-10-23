@@ -5,6 +5,15 @@
 [ext_resource type="Texture2D" uid="uid://b46lqq8huf8im" path="res://carsprites/Sport/sport_red.png" id="3_wol1q"]
 [ext_resource type="Texture2D" uid="uid://dr11kmayvqgac" path="res://carsprites/Sport/sport_blue.png" id="4_ncmrg"]
 [ext_resource type="Texture2D" uid="uid://djgyd2tq6832d" path="res://carsprites/Sport/sport_yellow.png" id="5_wvot5"]
+[ext_resource type="Shader" uid="uid://blxec0qx26x20" path="res://shaders/arcade_game.gdshader" id="6_xf4j5"]
+
+[sub_resource type="GDScript" id="GDScript_tai42"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wol1q"]
+shader = ExtResource("6_xf4j5")
+shader_parameter/scanline_count = 400.0
+shader_parameter/vignette_intensity = 0.45
+script = SubResource("GDScript_tai42")
 
 [node name="CarSelect" type="Control" unique_id=2113569925]
 layout_mode = 3
@@ -26,6 +35,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="VBoxContainer" unique_id=1292365766]
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "ELIGE TU AUTO"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -51,3 +61,15 @@ texture_normal = ExtResource("4_ncmrg")
 [node name="TextureButton4" type="TextureButton" parent="VBoxContainer/HBoxContainer" unique_id=1302044478]
 layout_mode = 2
 texture_normal = ExtResource("5_wvot5")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=159133924]
+layer = 100
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1595697001]
+material = SubResource("ShaderMaterial_wol1q")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

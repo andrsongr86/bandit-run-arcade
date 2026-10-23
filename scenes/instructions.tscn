@@ -1,6 +1,16 @@
 [gd_scene format=3 uid="uid://b42s62gj6lwcs"]
 
 [ext_resource type="Script" uid="uid://b7h6oeid7qemb" path="res://scripts/instructions.gd" id="1_7ls63"]
+[ext_resource type="Shader" uid="uid://blxec0qx26x20" path="res://shaders/arcade_game.gdshader" id="2_nisbi"]
+[ext_resource type="Texture2D" uid="uid://b56d7c3t6tjy3" path="res://bandit-run-controles.png" id="2_njqp3"]
+
+[sub_resource type="GDScript" id="GDScript_njqp3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c00ax"]
+shader = ExtResource("2_nisbi")
+shader_parameter/scanline_count = 400.0
+shader_parameter/vignette_intensity = 0.45
+script = SubResource("GDScript_njqp3")
 
 [node name="Instructions" type="Control" unique_id=2030603632]
 layout_mode = 3
@@ -22,15 +32,9 @@ color = Color(0, 0, 0, 0.49019608)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ColorRect" unique_id=989723289]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -40,31 +44,23 @@ text = "CONTROLES DEL JUEGO
 "
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="ColorRect/VBoxContainer" unique_id=688003659]
+[node name="TextureRect" type="TextureRect" parent="ColorRect/VBoxContainer" unique_id=943809893]
 layout_mode = 2
-text = "
-TECLADO
-
-Dirección del auto: 
-Flecha Izquierda y Flecha Derecha
-
-Aceleraccion y Freno:
-Flecha Arriba y Flecha Abajo
-
-
-MANDO DE JUEGO
-
-Direccion del Auto: 
-D-Pad/Cruceta Izquierda y Dpad/Cruceta Derecha
-Joystick Izquierdo Eje X
-
-Aceleración:
-Gatilo Derecho/R2/RT
-
-Freno:
-Gatillo Izquierdo/L2/LT"
-horizontal_alignment = 1
+texture = ExtResource("2_njqp3")
+expand_mode = 5
 
 [node name="BackButton" type="Button" parent="ColorRect/VBoxContainer" unique_id=2123211842]
 layout_mode = 2
-text = "Volver al Menú Principal"
+text = "volver al menu principal"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=827955540]
+layer = 100
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1598704395]
+material = SubResource("ShaderMaterial_c00ax")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

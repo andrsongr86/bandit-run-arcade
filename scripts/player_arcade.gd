@@ -21,7 +21,7 @@ extends CharacterBody2D
 
 @export_group("Combo System")
 @export var base_near_miss_points: int = 100
-@export var combo_max_time: float = 3.0 # Temporizador de 3 segundos
+@export var combo_max_time: float = 3.0 
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var base_rotation: float = sprite.rotation 
@@ -37,7 +37,18 @@ var combo_timer: float = 0.0
 var counted_vehicles: Array[int] = []
 var cars_in_combo: int = 0 
 
+# Reproductor para el sonido del motor
+var engine_audio_player: AudioStreamPlayer
+
 func _ready() -> void:
+	# --- INICIALIZAR SONIDO DE MOTOR ---
+	engine_audio_player = AudioStreamPlayer.new()
+	var engine_path = "res://sound/car-engine-speeding.mp3"
+	if ResourceLoader.exists(engine_path):
+		engine_audio_player.stream = load(engine_path)
+		add_child(engine_audio_player)
+		engine_audio_player.play()
+
 	if sprite and GameManager:
 		var texture_path = GameManager.p1_car_texture_path
 		if player_id == 2:
@@ -103,7 +114,7 @@ func _clamp_positions() -> void:
 		
 	position.y = clamp(position.y, starting_y + min_y_offset, starting_y + max_y_offset)
 
-# --- SISTEMA DE COMBOS Y PROXIMIDAD (NEAR-MISS) ---
+# --- SISTEMA DE COMBOS Y PROXIMIDAD (NEAR-MISS) CON VOLÚMENES AJUSTADOS ---
 
 func _on_near_miss_detected(area: Area2D) -> void:
 	if area == self or area == near_miss_area:
@@ -118,6 +129,22 @@ func _on_near_miss_detected(area: Area2D) -> void:
 		counted_vehicles.append(car_id)
 		cars_in_combo += 1
 		
+		var is_truck_vehicle = false
+		if area is Vehicle and "is_truck" in area:
+			is_truck_vehicle = area.is_truck
+		elif area.get_parent() is Vehicle and "is_truck" in area.get_parent():
+			is_truck_vehicle = area.get_parent().is_truck
+		else:
+			is_truck_vehicle = area.is_in_group("Truck") or "truck" in area.name.to_lower() or "camion" in area.name.to_lower()
+		
+		# Bocina de camión un poco más alta (+4 dB) y bocina de coche un poco más baja (-5 dB)
+		if is_truck_vehicle:
+			if GameManager.truck_horn_stream:
+				GameManager.play_sfx(GameManager.truck_horn_stream, 4.0)
+		else:
+			if GameManager.car_horn_stream:
+				GameManager.play_sfx(GameManager.car_horn_stream, -5.0)
+		
 		var old_multiplier = combo_multiplier
 		
 		if not combo_active:
@@ -129,7 +156,6 @@ func _on_near_miss_detected(area: Area2D) -> void:
 			combo_points += base_near_miss_points
 			combo_multiplier = min(2 + int(float(cars_in_combo - 1) / 5.0), 8)
 			
-		# Si el multiplicador sube de nivel, damos un pequeño impulso visual a la cámara
 		if combo_multiplier > old_multiplier:
 			_trigger_camera_shake(4.0 * combo_multiplier)
 			
@@ -146,7 +172,6 @@ func _end_combo() -> void:
 	var final_score = combo_points * combo_multiplier
 	_add_score(final_score)
 	
-	# Si se completó un combo alto (X5 o más), la cámara celebra con un pequeño temblor
 	if combo_multiplier >= 5:
 		_trigger_camera_shake(4.0)
 	
@@ -175,7 +200,7 @@ func _add_score(amount: int) -> void:
 	elif GameManager and GameManager.has_method("add_score"):
 		GameManager.add_score(amount)
 
-# --- SISTEMA DE DAÑO ---
+# --- SISTEMA DE DAÑO, EXPLOSIÓN Y FUNDIDO DE MÚSICA AL MORIR ---
 
 func take_damage(_amount: int) -> void:
 	var local_mgr = null
@@ -186,16 +211,19 @@ func take_damage(_amount: int) -> void:
 		current_node = current_node.get_parent()
 		
 	if local_mgr:
-		# Si esta vida es la última (actualmente tiene 1 de vida y va a perder), el jugador muere
 		if local_mgr.current_health <= 1:
-			# 1. Creamos la explosión en la posición exacta del jugador
-			GameManager.spawn_explosion(global_position)
+			# 1. Explosión de jugador (is_player = true, volumen más alto configurado en GameManager)
+			GameManager.spawn_explosion(global_position, true)
 			
-			# 2. Ocultamos el sprite del carro para que parezca que estalló
+			# 2. Silenciar la música de fondo de la escena de juego gradualmente en 1 segundo
+			GameManager.fade_out_scene_music(1.0)
+			
 			if sprite:
 				sprite.visible = false
 				
-			# 3. Desactivamos el procesamiento de movimiento para que el carro se congele
+			if engine_audio_player and engine_audio_player.playing:
+				engine_audio_player.stop()
+				
 			set_process(false)
 			set_physics_process(false)
 			

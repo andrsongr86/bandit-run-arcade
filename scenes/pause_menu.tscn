@@ -1,6 +1,15 @@
 [gd_scene format=3 uid="uid://d1m7q5magq8s8"]
 
 [ext_resource type="Script" uid="uid://bykmg7ni2glls" path="res://scripts/pause_menu.gd" id="1_n87rw"]
+[ext_resource type="Shader" uid="uid://blxec0qx26x20" path="res://shaders/arcade_game.gdshader" id="2_myx47"]
+
+[sub_resource type="GDScript" id="GDScript_kukqi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5d2l8"]
+shader = ExtResource("2_myx47")
+shader_parameter/scanline_count = 400.0
+shader_parameter/vignette_intensity = 0.45
+script = SubResource("GDScript_kukqi")
 
 [node name="PauseMenu" type="CanvasLayer" unique_id=881543073]
 script = ExtResource("1_n87rw")
@@ -35,17 +44,30 @@ layout_mode = 2
 
 [node name="PauseLabel" type="Label" parent="Control/CenterContainer/VBoxContainer" unique_id=1330718082]
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "PAUSA"
 horizontal_alignment = 1
 
 [node name="ResumeButton" type="Button" parent="Control/CenterContainer/VBoxContainer" unique_id=64979978]
 layout_mode = 2
-text = "CONTINUAR"
+text = "continuar"
 
 [node name="RestartButton" type="Button" parent="Control/CenterContainer/VBoxContainer" unique_id=347746107]
 layout_mode = 2
-text = "REINICIAR"
+text = "reiniciar"
 
 [node name="MainMenuButton" type="Button" parent="Control/CenterContainer/VBoxContainer" unique_id=1361916814]
 layout_mode = 2
-text = "MENU PRINCIPAL"
+text = "menu principal"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2144923128]
+layer = 100
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=785321582]
+material = SubResource("ShaderMaterial_5d2l8")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

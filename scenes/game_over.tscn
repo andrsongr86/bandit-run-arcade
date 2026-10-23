@@ -1,6 +1,15 @@
 [gd_scene format=3 uid="uid://dfd3dry12lnjx"]
 
 [ext_resource type="Script" uid="uid://diajbnoq71ym6" path="res://scripts/game_over.gd" id="1_y26ei"]
+[ext_resource type="Shader" uid="uid://blxec0qx26x20" path="res://shaders/arcade_game.gdshader" id="2_wqhvx"]
+
+[sub_resource type="GDScript" id="GDScript_tbwuq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_racf3"]
+shader = ExtResource("2_wqhvx")
+shader_parameter/scanline_count = 400.0
+shader_parameter/vignette_intensity = 0.45
+script = SubResource("GDScript_tbwuq")
 
 [node name="GameOver" type="Control" unique_id=481546120]
 layout_mode = 3
@@ -39,7 +48,7 @@ horizontal_alignment = 1
 
 [node name="FinalScoreLabel" type="Label" parent="ColorRect/CenterContainer/VBoxContainer" unique_id=1425688729]
 layout_mode = 2
-text = "Puntuación Final: 0"
+text = "puntuacion final: 0"
 horizontal_alignment = 1
 
 [node name="InitialsLabel" type="Label" parent="ColorRect/CenterContainer/VBoxContainer" unique_id=553461783]
@@ -52,9 +61,21 @@ layout_mode = 2
 [node name="MainMenuButton" type="Button" parent="ColorRect/CenterContainer/VBoxContainer/ButtonsContainer" unique_id=2000873813]
 layout_mode = 2
 action_mode = 0
-text = "Menú Principal"
+text = "menu principal"
 
 [node name="RestartButton" type="Button" parent="ColorRect/CenterContainer/VBoxContainer/ButtonsContainer" unique_id=481369118]
 layout_mode = 2
 action_mode = 0
-text = "Reintentar"
+text = "reintentar"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=992536026]
+layer = 100
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=723169801]
+material = SubResource("ShaderMaterial_racf3")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

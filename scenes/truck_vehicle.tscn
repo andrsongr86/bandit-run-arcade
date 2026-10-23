@@ -17,6 +17,7 @@ size = Vector2(36, 162)
 script = ExtResource("1_kalbs")
 base_speed = 220.0
 vehicle_length = 200.0
+is_truck = true
 skin_textures = Array[Texture2D]([ExtResource("2_je8qp"), ExtResource("3_f1akm"), ExtResource("4_huwaa"), ExtResource("5_i4lp8")])
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=215079766]

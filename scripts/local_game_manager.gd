@@ -80,7 +80,7 @@ func trigger_game_over() -> void:
 	game_over_triggered.emit()
 	
 	# Esperamos 1.5 segundos para apreciar la explosión y la sacudida antes del Game Over
-	var timer = get_tree().create_timer(1.5)
+	var timer = get_tree().create_timer(3.5)
 	await timer.timeout
 	
 	call_deferred("_check_and_change_scene")

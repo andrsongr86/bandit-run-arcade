@@ -9,6 +9,7 @@ signal vehicle_destroyed(points: int)
 @export var collision_damage: int = 1
 @export var score_value: int = 100
 @export var vehicle_length: float = 80.0
+@export var is_truck: bool = false
 
 @export_group("Visuals")
 @export var skin_textures: Array[Texture2D] = []
@@ -72,8 +73,8 @@ func take_damage(amount: int) -> void:
 		_destroy()
 
 func _destroy() -> void:
-	# --- EXPLOSIÓN AL SER DESTRUIDO ---
-	GameManager.spawn_explosion(global_position)
+	# --- EXPLOSIÓN DE TRÁFICO (false) ---
+	GameManager.spawn_explosion(global_position, false)
 	
 	vehicle_destroyed.emit(score_value)
 	queue_free()
@@ -88,7 +89,7 @@ func _on_body_entered(body: Node2D) -> void:
 		_on_impact_with_player(body)
 
 func _on_impact_with_player(_player: Node2D) -> void:
-	# --- EXPLOSIÓN AL CHOCAR CONTRA EL JUGADOR ---
-	GameManager.spawn_explosion(global_position)
+	# --- EXPLOSIÓN DE TRÁFICO AL CHOCAR (false) ---
+	GameManager.spawn_explosion(global_position, false)
 	
 	queue_free()
